@@ -10,17 +10,16 @@ def fasta(lines):
             data[label] += line[:-1]
     return data
 
-def codons(s):
-    for i in range(0, len(s), 3):
-        yield s[i:i+3]
+def codons(dna_string):
+    for i in range(0, len(dna_string), 3):
+        yield dna_string[i:i+3]
 
-def gc(s):
+def count_gc(dna_string):
     count = 0
-    for c in s:
-        if c == 'G' or c == 'C':
+    for base in dna_string:
+        if base == 'G' or base == 'C':
             count += 1
-    return count / len(s)
-
+    return count / len(dna_string)
 
 codon_to_amino_acid = {
     'UUU': 'F', 'CUU': 'L', 'AUU': 'I', 'GUU': 'V', 'UUC': 'F',

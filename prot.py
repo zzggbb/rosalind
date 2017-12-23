@@ -1,13 +1,19 @@
 #!/bin/env python3
+
 import sys
 import util
 
-s = sys.stdin.readline()[:-1]
+"""
+Given: An RNA string 's' corresponding to a strand of mRNA
+Return: The protein string encoded by 's'.
+"""
 
-assert len(s) % 3 == 0
+dna_string = sys.stdin.readline()[:-1]
+
+assert len(dna_string) % 3 == 0
 
 amino_acids = []
-codons = util.codons(s)
+codons = util.codons(dna_string)
 
 while next(codons) != 'AUG':
     pass

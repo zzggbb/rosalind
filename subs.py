@@ -1,5 +1,11 @@
 #!/bin/env python3
+
 import sys
+
+"""
+Given: Two DNA strings 's' and 't'.
+Return: All locations of 't' as a substring of 's'.
+"""
 
 s = sys.stdin.readline()[:-1]
 t = sys.stdin.readline()[:-1]

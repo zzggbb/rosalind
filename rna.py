@@ -1,6 +1,12 @@
 #!/bin/env python3
+
 import sys
 
-line = sys.stdin.readlines()[0][:-1]
-out = line.replace('T', 'U')
-print(out)
+"""
+Given: A DNA string 't'
+Return: The transcribed RNA string of 't'.
+"""
+
+dna_string = sys.stdin.readline()[:-1]
+rna_string = dna_string.replace('T', 'U')
+print(rna_string)
