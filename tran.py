@@ -3,6 +3,14 @@
 import sys
 import util
 
+"""
+Given: Two DNA strings of equal length.
+Return: The transition/transversion ratio.
+
+transitions: A<>G, C<>T
+transversions: A<>C, A<>T, G<>C, G<>T
+"""
+
 s1, s2 = util.fasta(sys.stdin.readlines()).values()
 
 assert len(s1) == len(s2)

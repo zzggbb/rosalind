@@ -29,7 +29,7 @@ Punnett Squares:
       1         1/2     0
 """
 
-# f(a b c d e f) = 2a + 2b + 2c + 3d/2 + e
+# f(a b c d e f) = 2a + 2b + 2c + 3d/2 + e + 0*f
 couples_per_genotype = numpy.loadtxt(sys.stdin)
-num_offspring = numpy.sum(couples_per_genotype * [2, 2, 2, 1.5, 1, 0])
+num_offspring = 2 * numpy.sum(couples_per_genotype * [1, 1, 1, 0.75, 0.5, 0])
 print(num_offspring)

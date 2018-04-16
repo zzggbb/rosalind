@@ -1,5 +1,15 @@
 #!/bin/env python3
 
+N_CODON = 3
+alphabet = 'ACGT'
+
+def revc(string):
+    for base in string[::-1]:
+        yield complement_of_base[base]
+
+def rna(dna_string):
+    return dna_string.replace('T', 'U')
+
 def fasta(lines):
     data = {}
     for line in lines:
@@ -10,16 +20,33 @@ def fasta(lines):
             data[label] += line[:-1]
     return data
 
-def codons(dna_string):
-    for i in range(0, len(dna_string), 3):
-        yield dna_string[i:i+3]
+def codons(string):
+    length = len(string)
+    num_codons = length - (length % N_CODON)
+    for i in range(0, num_codons, N_CODON):
+        yield string[i:i+N_CODON]
 
-def gc(dna_string):
+def frames(string):
+    for i in range(N_CODON):
+        yield codons(string[i:])
+
+def gc(string):
     count = 0
-    for base in dna_string:
+    for base in string:
         if base == 'G' or base == 'C':
             count += 1
-    return count / len(dna_string)
+    return count / len(string)
+
+def protein(codons):
+    while next(codons) != 'AUG':
+        pass
+
+    yield 'M'
+    for codon in codons:
+        acid = amino_acid_of_codon[codon]
+        if acid == '$':
+            break
+        yield acid
 
 def permute(elements):
     if len(elements) <= 1:
@@ -48,7 +75,6 @@ def memoize(f):
 
     return g
 
-alphabet = 'ACGT'
 
 complement_of_base = {
     'C': 'G',
@@ -73,25 +99,39 @@ amino_acid_of_codon = {
     'UGG': 'W', 'CGG': 'R', 'AGG': 'R', 'GGG': 'G'
 }
 
+codons_of_amino_acid = {
+    '$': ['UAA', 'UAG', 'UGA'],
+    'A': ['GCU', 'GCC', 'GCA', 'GCG'],
+    'C': ['UGU', 'UGC'],
+    'D': ['GAU', 'GAC'],
+    'F': ['UUU', 'UUC'],
+    'G': ['GGU', 'GGC', 'GGA', 'GGG'],
+    'H': ['CAU', 'CAC'],
+    'I': ['AUU', 'AUC', 'AUA'],
+    'K': ['AAA', 'AAG'], 'E': ['GAA', 'GAG'],
+    'L': ['CUU', 'CUC', 'UUA', 'CUA', 'UUG', 'CUG'],
+    'M': ['AUG'],
+    'N': ['AAU', 'AAC'],
+    'P': ['CCU', 'CCC', 'CCA', 'CCG'],
+    'Q': ['CAA', 'CAG'],
+    'R': ['CGU', 'CGC', 'CGA', 'AGA', 'CGG', 'AGG'],
+    'S': ['UCU', 'UCC', 'UCA', 'UCG', 'AGU', 'AGC'],
+    'T': ['ACU', 'ACC', 'ACA', 'ACG'],
+    'V': ['GUU', 'GUC', 'GUA', 'GUG'],
+    'W': ['UGG'],
+    'Y': ['UAU', 'UAC'],
+}
+
+codons_per_amino_acid = {
+    '$': 3, 'A': 4, 'C': 2, 'D': 2, 'E': 2, 'F': 2, 'G': 4, 'H': 2, 'I': 3,
+    'K': 2, 'L': 6, 'M': 1, 'N': 2, 'P': 4, 'Q': 2, 'R': 6, 'S': 6, 'T': 4,
+    'V': 4, 'W': 1, 'Y': 2,
+}
+
 mass_of_amino_acid = {
-    'A':  71.03711,
-    'C':  103.00919,
-    'D':  115.02694,
-    'E':  129.04259,
-    'F':  147.06841,
-    'G':  57.02146,
-    'H':  137.05891,
-    'I':  113.08406,
-    'K':  128.09496,
-    'L':  113.08406,
-    'M':  131.04049,
-    'N':  114.04293,
-    'P':  97.05276,
-    'Q':  128.05858,
-    'R':  156.10111,
-    'S':  87.03203,
-    'T':  101.04768,
-    'V':  99.06841,
-    'W':  186.07931,
-    'Y':  163.06333
+    'A':  71.03711,  'C':  103.00919, 'D':  115.02694, 'E':  129.04259,
+    'F':  147.06841, 'G':  57.02146,  'H':  137.05891, 'I':  113.08406,
+    'K':  128.09496, 'L':  113.08406, 'M':  131.04049, 'N':  114.04293,
+    'P':  97.05276,  'Q':  128.05858, 'R':  156.10111, 'S':  87.03203,
+    'T':  101.04768, 'V':  99.06841,  'W':  186.07931, 'Y':  163.06333
 }

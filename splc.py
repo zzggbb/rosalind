@@ -2,7 +2,6 @@
 
 import sys
 import util
-from prot import protein_string
 
 """
 Given: A DNA string 's' and a collection of substrings of 's' acting
@@ -17,5 +16,7 @@ introns = data[1:]
 for intron in introns:
     dna_string = dna_string.replace(intron, '')
 
-rna_string = dna_string.replace('T', 'U')
-print(protein_string(rna_string))
+rna_string = util.rna(dna_string)
+codons = util.codons(rna_string)
+protein = util.protein(codons)
+print(''.join(protein))

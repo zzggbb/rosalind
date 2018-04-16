@@ -5,7 +5,8 @@ from util import fasta
 
 """
 Given: A collection of 'k' DNA strings each in FASTA format.
-Return: A longest common substring of the collection. (If multiple solutions exist, you may return any single solution.)
+Return: A longest common substring of the collection. If multiple solutions
+        exist, you may return any single solution.
 
 Notes:
 Start with the longest candidates, and work towards shorter ones.

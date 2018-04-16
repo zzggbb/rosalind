@@ -3,8 +3,11 @@
 import sys
 import util
 
+"""
+Given: A DNA string s.
+Return: The reverse complement of s.
+"""
+
 dna_string = sys.stdin.readline()[:-1]
-reverse_complement = ""
-for i in range(len(dna_string) - 1, -1, -1):
-    reverse_complement += util.complement_of_base[dna_string[i]]
+reverse_complement = ''.join(util.revc(dna_string))
 print(reverse_complement)

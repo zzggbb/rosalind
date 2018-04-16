@@ -4,12 +4,12 @@ import sys
 import numpy
 import util
 
-index_of_base = {
-    'A': 0,
-    'C': 1,
-    'G': 2,
-    'T': 3
-}
+"""
+Given: A collection of DNA strings of equal length, in FASTA format.
+Return: A consensus string and profile matrix for the collection.
+"""
+
+index_of_base = { 'A': 0, 'C': 1, 'G': 2, 'T': 3 }
 
 dna_strings = list(util.fasta(sys.stdin.readlines()).values())
 m = len(dna_strings)
